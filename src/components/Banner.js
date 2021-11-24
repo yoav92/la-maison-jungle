@@ -2,7 +2,7 @@ import '../styles/Banner.css';
 import logo from '../assets/logo.svg';
 
 function Banner(){
-    const title= 'La maison jungle'
+    const title= 'La maison jungle et de tarzan'
     return(
         <div className='lmj-banner'>
             <img src={logo} alt='La maison jungle' className='lmj-logo' />
