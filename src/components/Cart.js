@@ -5,8 +5,8 @@ function Cart(){
     
     return (<div>
     <ul>
-        <li>Prix du monstera: {priceMonstera}</li>
-        <li>Prix du Lierre: {priceLierre}</li>
+        <li>Prix du monstera pour un adulte: {priceMonstera}</li>
+        <li>Prix du Lierre pour un enfant: {priceLierre}</li>
         <li>Prix du Bouquet: {priceBouquet}</li>
         <li>Total du panier: {priceMonstera+priceLierre+priceBouquet}</li>
     </ul></div>)
