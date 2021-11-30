@@ -1,54 +1,58 @@
+import { useState } from 'react'
 import { plantList } from '../data/plantList'
+import PlantItem from './PlantItem'
+import Categories from './Categories'
 import '../styles/ShoppingList.css'
-//Indiquée entre accolades,  &&   précède un élément JSX et précise que l'élément ne sera généré que si la condition est respectée
-//{plant.isBestSale || plant.category === "classique" && <span>🔥</span>}
-function ShoppingList() {
-	return (
-    <div>
-    <ul>
-        {
-        plantList.map((Element) => 
-        (
-            
-            <li key={Element.id}>
-                {Element.name}
-                {Element.isSpecialOffer?<span>🔥</span>:null}
-                {Element.isSpecialOffer && <div className="affichage">soldes</div>}
-            </li>
 
-        )
-        )}
-    </ul>
-    </div>
-    )
+function ShoppingList({ cart, updateCart, activeCategory, setActiveCategory}) {
+	const categories = plantList.reduce(
+		(acc, plant) =>
+			acc.includes(plant.category) ? acc : acc.concat(plant.category),
+		[]
+	)
+
+	function addToCart(name, price) {
+		const currentPlantSaved = cart.find((plant) => plant.name === name)
+		if (currentPlantSaved) {
+			const cartFilteredCurrentPlant = cart.filter(
+				(plant) => plant.name !== name
+			)
+			updateCart([
+				...cartFilteredCurrentPlant,
+				{ name, price, amount: currentPlantSaved.amount + 1 }
+			])
+		} else {
+			updateCart([...cart, { name, price, amount: 1 }])
+		}
+		
+	}
+
+	return (
+		<div className='lmj-shopping-list'>
+			<Categories
+				categories={categories}
+				setActiveCategory={setActiveCategory}
+				activeCategory={activeCategory}
+			/>
+			
+			<ul className='lmj-plant-list'>
+				{plantList.map(({ id, cover, name, water, light, price, category }) =>
+					activeCategory.length === 0 || activeCategory.includes(category) ? (
+						<div key={id}>
+							<PlantItem
+								cover={cover}
+								name={name}
+								water={water}
+								light={light}
+								price={price}
+							/>
+							<button onClick={() => addToCart(name, price)}>Ajouter</button>
+						</div>
+					) : null
+				)}
+			</ul>
+		</div>
+	)
 }
 
 export default ShoppingList
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
